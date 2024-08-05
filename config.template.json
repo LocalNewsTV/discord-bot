@@ -1,0 +1,63 @@
+{
+  "admins": [
+    "your",
+    "id"
+  ],
+  "grantable_roles": [
+    "Role",
+    "String"
+  ],
+  "alert_channel_ids": [
+    111111111111111111111
+  ],
+  "events": {
+    "evtA": {
+      "title": "Event A",
+      "roleID": "123123123123",
+      "duration": 15,
+      "alertsOn": true,
+      "schedule": [
+        "10:56",
+        "15:56",
+        "18:56"
+      ],
+      "messages": [
+        "Example A",
+        "Example B",
+        "Example C"
+      ]
+    },
+    "evtB": {
+      "title": "Event B",
+      "roleID": "123123123123",
+      "duration": 15,
+      "alertsOn": false,
+      "schedule": [
+        "10:56",
+        "15:56",
+        "18:56"
+      ],
+      "messages": [
+        "Example A",
+        "Example B",
+        "Example C"
+      ]
+    },
+    "evtC": {
+      "title": "Event C",
+      "roleID": "123123123123",
+      "duration": 15,
+      "alertsOn": true,
+      "schedule": [
+        "10:56",
+        "15:56",
+        "18:56"
+      ],
+      "messages": [
+        "Example A",
+        "Example B",
+        "Example C"
+      ]
+    }
+  }
+}
