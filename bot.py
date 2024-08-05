@@ -102,7 +102,18 @@ async def scheduler():
     channel = bot.get_channel(channel_id)
     for alert in alerts:
       await channel.send(alert)
-        
+
+@bot.command(aliases=['alerts', 'active', 'pings'])
+async def active_alert(ctx):
+  response = []
+  for key in config['events']:
+      response.append(f"- **{config['events'][key]['title']}**: `{config['events'][key]['alertsOn']}`")
+  if not response:
+    await ctx.send("No events currently active")
+  else:
+    response.insert(0, "Currently sending alerts for these events:")
+    await ctx.send("\n".join(response))
+       
 @bot.command()
 async def turn_on_alert(ctx, item):
   if ctx.author.name in ADMIN_WHITELIST:
