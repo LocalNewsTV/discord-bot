@@ -34,7 +34,6 @@ config = get_schedule()
 ADMIN_WHITELIST = config['admins']
 GRANTABLE_ROLES = config['grantable_roles']
 ALERT_CHANNEL_IDS = config['alert_channel_ids']
-print(ADMIN_WHITELIST, GRANTABLE_ROLES, ALERT_CHANNEL_IDS)
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -79,7 +78,6 @@ async def join(ctx):
 
 @bot.command()
 async def leave(ctx):
-  print(ctx)
   if (ctx.voice_client):
     await ctx.voice_client.disconnect()
   else:
@@ -116,7 +114,6 @@ async def active_alert(ctx):
        
 @bot.command()
 async def turn_on_alert(ctx, item):
-  print(ctx.author.name in ADMIN_WHITELIST)
   if (ctx.author.name in ADMIN_WHITELIST):
     item = item.lower()
     if config['events'].get(item, None):
