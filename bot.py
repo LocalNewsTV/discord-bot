@@ -31,10 +31,10 @@ def log(ctx):
 ###########################################################################
 SCHEDULE_FILE = 'config.json'
 config = get_schedule()
-ADMIN_WHITELIST = getattr(config, 'admins', [])
-GRANTABLE_ROLES = getattr(config, 'grantable_roles', [])
-ALERT_CHANNEL_IDS = getattr(config, 'alert_channel_ids', [])
-
+ADMIN_WHITELIST = config['admins']
+GRANTABLE_ROLES = config['grantable_roles']
+ALERT_CHANNEL_IDS = config['alert_channel_ids']
+print(ADMIN_WHITELIST, GRANTABLE_ROLES, ALERT_CHANNEL_IDS)
 intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='!', intents=intents)
@@ -116,23 +116,28 @@ async def active_alert(ctx):
        
 @bot.command()
 async def turn_on_alert(ctx, item):
-  if ctx.author.name in ADMIN_WHITELIST:
+  print(ctx.author.name in ADMIN_WHITELIST)
+  if (ctx.author.name in ADMIN_WHITELIST):
     item = item.lower()
-    if getattr(config, item, None):
-      config[item]['alertsOn'] = True
+    if config['events'].get(item, None):
+      config['events'][item]['alertsOn'] = True
       update_schedule()
       return await on_action_success(ctx)
+    else:
+      return await on_action_failure(ctx, "Alert not found")
   await on_action_failure(ctx, "Unauthorized. For admin use only")
 
 @bot.command()
 async def turn_off_alert(ctx, item):
   if ctx.author.name in ADMIN_WHITELIST:
     item = item.lower()
-    if getattr(config, item, None):
-      config[item]['alertsOn'] = False
+    if config['events'].get(item, None):
+      config['events'][item]['alertsOn'] = False
       update_schedule()
       await on_action_success(ctx)
       return
+    else:
+      return await on_action_failure(ctx, "Alert not found")
   await on_action_failure(ctx, "Unauthorized. For admin use only")
 
 
